@@ -45,8 +45,7 @@ ENDIF(${CMAKE_BUILD_TOOL} MATCHES "(msdev|VCExpress|devenv)")
 # Include the projects in the subdirectories.
 #
 
-ADD_SUBDIRECTORY(zlib)
-ADD_SUBDIRECTORY(zziplib)
+ADD_SUBDIRECTORY(external)
 ADD_SUBDIRECTORY(luazip)
 
 
