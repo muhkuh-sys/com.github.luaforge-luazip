@@ -6,11 +6,11 @@ PROJECT("luazip")
 # Enable tests (see here for details: http://www.vtk.org/Wiki/CMake/Testing_With_CTest)
 ENABLE_TESTING()
 
-# Include the location of the dependencies.
-INCLUDE(ivy/ant_paths.cmake)
+# Set some installation folders.
+INCLUDE(cmake/muhkuh_installation_folders.cmake)
 
-# Select the LUA version.
-INCLUDE(cmake/muhkuh_lua.cmake)
+OPTION(BUILDCFG_ONLY_JONCHKI_CFG "Build only the jonchki configuration. This is used for the resolve phase. The default is OFF."
+       "OFF")
 
 
 #----------------------------------------------------------------------------
@@ -44,8 +44,9 @@ ENDIF(${CMAKE_BUILD_TOOL} MATCHES "(msdev|VCExpress|devenv)")
 #
 # Include the projects in the subdirectories.
 #
-
-ADD_SUBDIRECTORY(external)
+IF((${BUILDCFG_ONLY_JONCHKI_CFG} STREQUAL "OFF"))
+	ADD_SUBDIRECTORY(external)
+ENDIF((${BUILDCFG_ONLY_JONCHKI_CFG} STREQUAL "OFF"))
 ADD_SUBDIRECTORY(luazip)
 
 

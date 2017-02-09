@@ -138,7 +138,9 @@ include_directories ( ${CMAKE_CURRENT_BINARY_DIR} )
 ###########################################################################################
 
 # Zlib library needed
-find_package ( ZLIB REQUIRED )
+find_package(net.zlib-zlib REQUIRED CONFIG)
+GET_TARGET_PROPERTY(ZLIB_LIBRARY net.zlib-zlib::zlibstatic LOCATION)
+SET(ZLIB_INCLUDE_DIR "${net.zlib-zlib_INCLUDE_DIR}")
 include_directories ( ${ZLIB_INCLUDE_DIR} )
 
 # libzlib library

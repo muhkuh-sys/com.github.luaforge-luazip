@@ -6,6 +6,11 @@ ENABLE_TESTING()
 FIND_PACKAGE(PythonInterp REQUIRED)
 
 
+FIND_PACKAGE(net.zlib-zlib REQUIRED CONFIG)
+GET_TARGET_PROPERTY(ZLIB_LIBRARY net.zlib-zlib::zlibstatic LOCATION)
+SET(ZLIB_INCLUDE_DIR "${net.zlib-zlib_INCLUDE_DIR}")
+
+
 # Build the Lua modules.
 ADD_LIBRARY(TARGET_luazip MODULE
             src/luazip.c)
@@ -28,13 +33,10 @@ INSTALL(TARGETS TARGET_luazip
         RUNTIME DESTINATION bin
         INCLUDES DESTINATION include)
 
-# Add the rockspec.
-#INSTALL(FILES rockspec/md5-1.1.2-1.rockspec DESTINATION .)
-
 
 # Add tests for this module.
 IF((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") AND (${CMAKE_COMPILER_IS_GNUCC}))
 	# Here are the MinGW specific tests.
 	ADD_TEST(NAME luafilesystem_MinGW_DLL_dependencies
-	         COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tests/mingw_dll_dependencies.py -u lua5.1 $<TARGET_FILE:TARGET_luazip>)
+	         COMMAND "${PYTHON_EXECUTABLE}" ${CMAKE_HOME_DIRECTORY}/cmake/tests/mingw_dll_dependencies.py -u lua5.1 -u lua5.2 -u lua5.3 $<TARGET_FILE:TARGET_luazip>)
 ENDIF((${CMAKE_SYSTEM_NAME} STREQUAL "Windows") AND (${CMAKE_COMPILER_IS_GNUCC}))
